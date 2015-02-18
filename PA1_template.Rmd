@@ -7,22 +7,44 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r}
-activity <- read.csv("./data/activity.csv")
+```{r, echo=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+```{r, echo=TRUE}
+activity <- read.csv("./data/activity.csv", header = TRUE, sep = ',', na.strings = 'NA' )
 dim(activity)
 ```
 
 
 ## What is mean total number of steps taken per day?
-
-
+```{r, echo=TRUE}
+dailySteps <- summarize(group_by(activity, date), steps = sum(steps, na.rm = TRUE))
+hist(dailySteps$steps, breaks=20)
+mean(dailySteps$steps)
+median(dailySteps$steps)
+```
 
 ## What is the average daily activity pattern?
-
+```{r, echo=TRUE}
+dailyPattern <- summarize(group_by(activity, interval), steps = sum(steps, na.rm = TRUE))
+maxInterval <- dailyPattern[which.max(dailyPattern$steps),][[1]]
+plot(dailyPattern$interval, dailyPattern$steps, type = 'l', xaxt = 'n')
+axis(1, at = c(0,500,maxInterval, 1000, 1500, 2000))
+abline(v=maxInterval, col = "dark red")
+```
 
 
 ## Imputing missing values
+```{r,echo=TRUE}
+length(which(is.na(activity$steps)))
 
-
+activityNoNa <- mutate(group_by(activity, interval), intervalSteps = median(steps, na.rm = TRUE))
+activityNoNa <- mutate(activityNoNa, stepsNoNa = ifelse(is.na(steps), intervalSteps, steps))
+dailySteps <- summarize(group_by(activityNoNa, date), steps = sum(stepsNoNa, na.rm = TRUE))
+hist(dailySteps$steps, breaks=20)
+mean(dailySteps$steps)
+median(dailySteps$steps)
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
