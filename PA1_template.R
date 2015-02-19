@@ -39,9 +39,9 @@ qplot(interval, intervalSteps,
 
 par(mfrow = c(2,1))
 with(intervalStepsWeek, plot(interval,intervalSteps, type= 'n'))
-with(subset(intervalStepsWeek, day.of.week == "weekend"), points(interval, intervalSteps, col = "dark blue", type = 'l'))
+with(filter(intervalStepsWeek, day.of.week == "weekend"), points(interval, intervalSteps, col = "dark blue", type = 'l'))
 with(intervalStepsWeek, plot(interval,intervalSteps, type= 'n'))
-with(subset(intervalStepsWeek, day.of.week == "weekday"), points(interval, intervalSteps, col = "dark red", type = 'l'))
+with(filter(intervalStepsWeek, day.of.week == "weekday"), points(interval, intervalSteps, col = "dark red", type = 'l'))
 
 xyplot(intervalSteps ~ interval | day.of.week, data=intervalStepsWeek, type = "l", col ="dark blue", layout = c(1,2))
 

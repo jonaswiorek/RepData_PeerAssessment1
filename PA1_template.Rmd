@@ -48,4 +48,12 @@ median(dailyStepsNoNa$steps)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+```{r,echo=TRUE}
+library(lattice)
+Sys.setlocale("LC_TIME","C") #Get weekdays in English in RStudio
+activityNoNa <- mutate(activityNoNa, day.of.week = as.factor(ifelse((weekdays(as.Date(activity$date))) %in% c("Saturday", "Sunday"), "weekend", "weekday")))
+intervalStepsWeek <- summarize(group_by(activityNoNa, interval, day.of.week), intervalSteps = floor(mean(steps)))
+
+xyplot(intervalSteps ~ interval | day.of.week, data=intervalStepsWeek, type = "l", col ="dark blue", layout = c(1,2))
+```
 
