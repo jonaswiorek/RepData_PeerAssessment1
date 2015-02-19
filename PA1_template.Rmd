@@ -39,12 +39,13 @@ abline(v=maxInterval, col = "dark red")
 ```{r,echo=TRUE}
 length(which(is.na(activity$steps)))
 
-activityNoNa <- mutate(group_by(activity, interval), intervalSteps = mean(steps, na.rm = TRUE))
-activityNoNa <- mutate(activityNoNa, stepsNoNa = ifelse(is.na(steps), intervalSteps, steps))
-dailyStepsNoNa <- summarize(group_by(activityNoNa, date), steps = sum(stepsNoNa))
+intervalSteps <- summarize(group_by(activity, interval), intervalSteps = floor(mean(steps, na.rm = TRUE)))
+activityNoNa <- mutate(activity, steps = ifelse(is.na(steps), intervalSteps$intervalSteps, steps))
+dailyStepsNoNa <- summarize(group_by(activityNoNa, date), steps = sum(steps))
 hist(dailyStepsNoNa$steps, breaks=20)
 mean(dailyStepsNoNa$steps)
 median(dailyStepsNoNa$steps)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
