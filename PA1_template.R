@@ -1,42 +1,20 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
-
-
-## Loading and preprocessing the data
-```{r, echo=FALSE}
 library(ggplot2)
 library(dplyr)
-```
-```{r, echo=TRUE}
+
 activity <- read.csv("./data/activity.csv", header = TRUE, sep = ',', na.strings = 'NA')
 dim(activity)
-```
 
-
-## What is mean total number of steps taken per day?
-```{r, echo=TRUE}
 dailySteps <- summarize(group_by(activity, date), steps = sum(steps, na.rm = TRUE))
 hist(dailySteps$steps, breaks=20)
 mean(dailySteps$steps)
 median(dailySteps$steps)
-```
 
-## What is the average daily activity pattern?
-```{r, echo=TRUE}
 dailyPattern <- summarize(group_by(activity, interval), steps = sum(steps, na.rm = TRUE))
 maxInterval <- dailyPattern[which.max(dailyPattern$steps),][[1]]
 plot(dailyPattern$interval, dailyPattern$steps, type = 'l', xaxt = 'n')
 axis(1, at = c(0,500,maxInterval, 1000, 1500, 2000))
 abline(v=maxInterval, col = "dark red")
-```
 
-
-## Imputing missing values
-```{r,echo=TRUE}
 length(which(is.na(activity$steps)))
 
 activityNoNa <- mutate(group_by(activity, interval), intervalSteps = mean(steps, na.rm = TRUE))
@@ -45,6 +23,4 @@ dailyStepsNoNa <- summarize(group_by(activityNoNa, date), steps = sum(stepsNoNa)
 hist(dailyStepsNoNa$steps, breaks=20)
 mean(dailyStepsNoNa$steps)
 median(dailyStepsNoNa$steps)
-```
 
-## Are there differences in activity patterns between weekdays and weekends?
