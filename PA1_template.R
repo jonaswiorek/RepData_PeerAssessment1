@@ -1,8 +1,11 @@
+library(lattice)
 library(ggplot2)
 library(dplyr)
 
 activity <- read.csv("./data/activity.csv", header = TRUE, sep = ',', na.strings = 'NA')
 dim(activity)
+
+activity <- mutate(activity, date = as.Date(date, "%Y-%m-%d"))
 
 dailySteps <- summarize(group_by(activity, date), steps = sum(steps, na.rm = TRUE))
 hist(dailySteps$steps, breaks=20)

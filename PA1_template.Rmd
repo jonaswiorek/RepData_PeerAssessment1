@@ -13,7 +13,6 @@ library(dplyr)
 ```
 ```{r, echo=TRUE}
 activity <- read.csv("./data/activity.csv", header = TRUE, sep = ',', na.strings = 'NA')
-dim(activity)
 ```
 
 
@@ -21,9 +20,11 @@ dim(activity)
 ```{r, echo=TRUE}
 dailySteps <- summarize(group_by(activity, date), steps = sum(steps, na.rm = TRUE))
 hist(dailySteps$steps, breaks=20)
-mean(dailySteps$steps)
-median(dailySteps$steps)
+meanDailySteps <- mean(dailySteps$steps)
+medianDailySteps <- median(dailySteps$steps)
 ```
+The mean of the total number of steps taken per day is `r meanDailySteps`.
+The medianan of the total number of steps taken per day is `r medianDailySteps`.
 
 ## What is the average daily activity pattern?
 ```{r, echo=TRUE}
