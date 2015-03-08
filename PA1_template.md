@@ -5,50 +5,9 @@
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.2
-```
-
-```r
 library(dplyr)
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.1.2
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     filter
-## 
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
 library(xtable)
-```
-
-```
-## Warning: package 'xtable' was built under R version 3.1.2
-```
-
-```r
 library(knitr)
-```
-
-```
-## Warning: package 'knitr' was built under R version 3.1.2
-```
-
-```r
 opts_chunk$set(fig.path = "figure/")
 ```
 Load the data.
@@ -68,7 +27,7 @@ print.xtable(xt,type = "html")
 ```
 
 <!-- html table generated in R 3.1.1 by xtable 1.7-4 package -->
-<!-- Sun Mar  8 16:41:43 2015 -->
+<!-- Sun Mar  8 18:56:01 2015 -->
 <table border=1>
 <tr> <th>  </th> <th> date </th> <th> steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-01 </td> <td align="right">   0 </td> </tr>
