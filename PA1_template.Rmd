@@ -11,6 +11,8 @@ output:
 library(ggplot2)
 library(dplyr)
 library(xtable)
+library(knitr)
+opts_chunk$set(fig.path = "figure/")
 ```
 Load the data.
 ```{r, echo=TRUE}
@@ -48,7 +50,7 @@ Calculate  and plot the average number of steps taken per 5-minute intervals ave
 dailyPattern <- summarize(group_by(activity, interval), steps = mean(steps, na.rm = TRUE))
 maxInterval <- dailyPattern[which.max(dailyPattern$steps),][[1]]
 plot(dailyPattern$interval, dailyPattern$steps, type = 'l', xaxt = 'n',
-     xlab = "Interval", ylab = "Steps")
+     xlab = "Interval", ylab = "Number of steps")
 axis(1, at = c(0,500,maxInterval, 1000, 1500, 2000))
 abline(v=maxInterval, col = "dark red")
 ```
@@ -94,6 +96,6 @@ Make a panel plot containing a time series plot of the 5-minute interval and the
 ```{r,echo=TRUE}
 library(lattice)
 intervalStepsWeek <- summarize(group_by(activityNoNa, interval, day.of.week), intervalSteps = floor(mean(steps)))
-xyplot(intervalSteps ~ interval | day.of.week, data=intervalStepsWeek, type = "l", col ="dark blue", layout = c(1,2))
+xyplot(intervalSteps ~ interval | day.of.week, data=intervalStepsWeek, type = "l", col ="dark blue", ylab = "Number of steps", layout = c(1,2))
 ```
 
