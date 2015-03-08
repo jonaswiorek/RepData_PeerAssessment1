@@ -1,20 +1,31 @@
 library(lattice)
 library(ggplot2)
 library(dplyr)
+library(xtable)
 
 activity <- read.csv("./data/activity.csv", header = TRUE, sep = ',', na.strings = 'NA')
 dim(activity)
 
-activity <- mutate(activity, date = as.Date(date, "%Y-%m-%d"))
+#activity <- mutate(activity, date = as.Date(date, "%Y-%m-%d"))
 
 dailySteps <- summarize(group_by(activity, date), steps = sum(steps, na.rm = TRUE))
-hist(dailySteps$steps, breaks=20)
+xtable(dailySteps)
+hist(dailySteps$steps, breaks=16, freq = TRUE, xlab = "Daily Steps",
+        main("Histogram of total number of daily steps "))
+
+hist(dailySteps$steps, breaks=20, main="Histogram of daily steps")
+
+ggplot(dailySteps, aes(x=steps)) +
+        geom_histogram(binwidth = 1000, aes(fill=..count..)) +
+        ggtitle("Histogram of daily steps")
+
 mean(dailySteps$steps)
 median(dailySteps$steps)
 
-dailyPattern <- summarize(group_by(activity, interval), steps = sum(steps, na.rm = TRUE))
+dailyPattern <- summarize(group_by(activity, interval), steps = mean(steps, na.rm = TRUE))
 maxInterval <- dailyPattern[which.max(dailyPattern$steps),][[1]]
-plot(dailyPattern$interval, dailyPattern$steps, type = 'l', xaxt = 'n')
+plot(dailyPattern$interval, dailyPattern$steps, type = 'l', xaxt = 'n', 
+     xlab = "Interval", ylab = "Steps")
 axis(1, at = c(0,500,maxInterval, 1000, 1500, 2000))
 abline(v=maxInterval, col = "dark red")
 
