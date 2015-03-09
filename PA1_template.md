@@ -27,7 +27,7 @@ print.xtable(xt,type = "html")
 ```
 
 <!-- html table generated in R 3.1.1 by xtable 1.7-4 package -->
-<!-- Sun Mar  8 18:56:01 2015 -->
+<!-- Mon Mar  9 17:43:15 2015 -->
 <table border=1>
 <tr> <th>  </th> <th> date </th> <th> steps </th>  </tr>
   <tr> <td align="right"> 1 </td> <td> 2012-10-01 </td> <td align="right">   0 </td> </tr>
@@ -101,7 +101,7 @@ ggplot(dailySteps, aes(x=steps)) +
         xlab("Daily Steps")
 ```
 
-![](figure/unnamed-chunk-4-1.png) 
+![](figure/histogramDailySteps-1.png) 
   
 Calculate the mean and median of the total number of steps taken per day.
 
@@ -125,7 +125,7 @@ axis(1, at = c(0,500,maxInterval, 1000, 1500, 2000))
 abline(v=maxInterval, col = "dark red")
 ```
 
-![](figure/unnamed-chunk-6-1.png) 
+![](figure/plotIntervalSteps-1.png) 
 The 835 5-minute interval contains the maximum number of steps on average across all the days in the dataset.
 
 ## Imputing missing values
@@ -151,7 +151,7 @@ ggplot(dailySteps, aes(x=steps)) +
         xlab("Daily Steps")
 ```
 
-![](figure/unnamed-chunk-9-1.png) 
+![](figure/histogramDailyStepsNoNa-1.png) 
 Calculate the mean and median of the total number of steps taken per day with the missing values replaced.
 
 ```r
@@ -178,5 +178,5 @@ intervalStepsWeek <- summarize(group_by(activityNoNa, interval, day.of.week), in
 xyplot(intervalSteps ~ interval | day.of.week, data=intervalStepsWeek, type = "l", col ="dark blue", ylab = "Number of steps", layout = c(1,2))
 ```
 
-![](figure/unnamed-chunk-12-1.png) 
+![](figure/panelPlotWeek-1.png) 
 
